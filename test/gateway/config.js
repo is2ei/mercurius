@@ -4,6 +4,20 @@ const { test } = require('tap')
 const Fastify = require('fastify')
 const GQL = require('../..')
 
+test('"gateway" option must be object', async (t) => {
+  const app = Fastify()
+
+  app.register(GQL, {
+    gateway: false
+  })
+
+  try {
+    await app.ready()
+  } catch (err) {
+    t.equal(err.message, 'Invalid options: "gateway" must be object')
+  }
+})
+
 test('"schema" option not allowed in gateway mode', async (t) => {
   const app = Fastify()
   const schema = `

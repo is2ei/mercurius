@@ -151,6 +151,10 @@ const plugin = fp(async function (app, opts) {
     throw new MER_ERR_INVALID_OPTS('Adding "schema", "resolvers" or "loaders" to plugin options when plugin is running in gateway mode is not allowed')
   }
 
+  if (gateway != null && typeof gateway !== 'object') {
+    throw new MER_ERR_INVALID_OPTS('"gateway" must be object')
+  }
+
   if (gateway && Array.isArray(gateway.services)) {
     const serviceNames = new Set()
     for (const service of gateway.services) {
